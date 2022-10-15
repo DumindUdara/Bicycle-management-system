@@ -26,11 +26,29 @@ if(isset($_SESSION['login'])){
 
 <style>
 
-  @media (min-width:768px){
-    .icons{
+  @media (max-width:780px) {
+    .nav-list{
+      width:100%!important;
+      justify-content: space-evenly;
+      margin: 0;
+      padding: 0;
+      height: fit-content!important;
+      flex: 1;
+  
+    }
+    .nav-list>li{
+      font-size: 1.1em;
+    }
+    .nav2{
       width: 100%!important;
     }
   }
+  
+  .nav-list>li{
+    margin: 5px 10px 5px 10px;
+  }
+
+  
 </style>
   
   <!-- nav bar  -->
@@ -42,9 +60,9 @@ if(isset($_SESSION['login'])){
       
       <div class="icons w-75 d-flex align-items-center w-100 justify-content-end border border-1 border-white
        ">
-        <ul class="d-flex justify-content-around align-items-center list-unstyled w-50 ">
-          <li class="">Si</li>
-          <li>En</li>
+        <ul class="d-flex justify-content-around align-items-center list-unstyled w-50 nav-list">
+          <li class=" d-none d-lg-block">Si</li>
+          <li class=" d-none d-lg-block">En</li>
           <li><i class="fa-solid fa-right-from-bracket">
 
           <?= $logedin? '</i><a href="./actions/config.php?action=logout" class="text-dark text-decoration-none" > Logout</a>' : '</i><a href="./login.php" class="text-dark text-decoration-none"> Login</a>'?>
@@ -81,7 +99,7 @@ if(isset($_SESSION['login'])){
     }
   </style>
   <div class="w-100" style="height:60px;background-color: #b5b5b5;">
-    <ul class="list-unstyled d-flex w-50 align-content-around align-items-center justify-content-around ">
+    <ul class="list-unstyled nav2 d-flex w-50 align-content-around align-items-center justify-content-around ">
       <li class="nav-item-bottom">
         Home
       </li>

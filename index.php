@@ -36,15 +36,17 @@ if(isset($_GET['date'])){
     </div>
   </div>
 
-  <div class="container-fluid d-flex align-items-center justify-content-around p-4">
-    <div class="serach-box align-self-center w-50">
-     <form action="<?= $_SERVER['PHP_SELF']?>" >
-      <div class="input-group mb-3">
-        
-        <input required type="date" class="form-control" name="date" value="<?= strval(date('m/d/Y',time())) ?>"  aria-describedby="button-addon2">
-        <button class="btn btn-success" type="submit" id="button-addon2">Button</button>
-      </div>
+  <div class="container-fluid my-4">
+    <div class="row">
+     <div class="col-10 col-md-4 mx-auto">
+      <form action="<?= $_SERVER['PHP_SELF']?>" >
+        <div class="input-group mb-3">
+          
+          <input required type="date" class="form-control" name="date" value="<?= strval(date('m/d/Y',time())) ?>"  aria-describedby="button-addon2">
+          <button class="btn btn-success" type="submit" id="button-addon2">Button</button>
+        </div>
      </form>
+     </div>
     </div>
   </div>
 
