@@ -74,12 +74,13 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
                   if($res->num_rows>0){
                     $data=$res->fetch_assoc();
 
-                    $rd=explode('-',$data['req_on'])[1];
+                    $rd=explode('-',$data['req_on'])[2];
 
                     $total=0;
 
                     if($data['handover_on']!=null){
-                      $hd=explode('-',$data['handover_on'])[1];
+                      $hd=explode('-',$data['handover_on'])[2];
+                      
 
                       $total=((int)$hd-$rd)*100;
                     }
@@ -144,15 +145,29 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
             <tr>
               <td><?= $book['bid']?></td>
               <td  ><?= $book['req_on']?></td>
-              <form action="" class="detail-form" >
-                <input type="hidden" value="<?= $book['id'] ?>">
-                 <td><input type="date" name="hd" class="form-control form-control-sm"></td>
-                <td><input type="time" name="ht" class=" form-control form-control-sm"></td>
-                <td><button type="submit"><i class="fa-solid fa-floppy-disk text-success"></i></button></td>
-              </form>
-              <td><button class="btn btn-sm <?= $book['approve']==0?'btn-danger':'btn-success' ?> w-100">
+              <?php
+              if($book['handover_on']==null){?>
+                <form class="detail-form" action="./actions/register.php" method="POST">
+                  <input type="hidden" value="<?= $book['id'] ?>" name="bid">
+                  <td><input type="date" required name="hd" class="form-control form-control-sm"></td>
+                  <td><input type="time" required name="ht" class=" form-control form-control-sm"></td>
+                  <td><button type="submit" name="update"><i class="fa-solid fa-floppy-disk text-success"></i></button></td>
+                </form>
+
+              <?php }
+              else{?>
+                <td  ><?= $book['handover_on']?></td>
+                <td  ><?= $book['handover_at']?></td>
+                <td></td>
+
+              <?php }
+              ?>
+              <td><button class="btn btn-sm app-btn <?= $book['approve']==0?'btn-danger':'btn-success' ?> w-100"
+              data-bid=<?= $book['id']?> 
+              data-state=<?= $book['approve']==0?1:0 ?>
+              data-bicycle=<?= $book['bid'] ?> >
               <?= 
-              $book['approve']==0?'No':'Yes'
+              $book['approve']==0?'&times':'&#10003';
               
               ?>
             </button></td>
@@ -180,18 +195,51 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
         }, 2000);
 
 
+        let appbtns=document.querySelectorAll('.app-btn')
+        appbtns.forEach(btn=>{
+          btn.addEventListener('click',(e)=>{
 
-        let forms=document.querySelectorAll('.detail-form')
+            const bid=e.target.dataset.bid;
+            const bicycleid=e.target.dataset.bicycle;
+            const state=e.target.dataset.state;
 
-        forms.forEach(form=>{
-          form.addEventListener('submit',(e)=>{
-            e.preventDefault()
+            try{
+              var req=new XMLHttpRequest()
 
-            // TODO 
+              req.onreadystatechange=function(){
+                if(this.readyState==4 && this.status==200){
+                  if(parseInt(this.responseText)==1){
+                    
+                    if(state==1){
+                      e.target.classList.remove('bg-danger')
+                      e.target.classList.add('bg-success')
+                      e.target.innerHTML='&#10003'
+                    }else{
+                      e.target.classList.remove('bg-success')
+                      e.target.classList.add('bg-danger')
+                      e.target.innerHTML='&times'
+                    }
+                    
+                  }
+                }
+              }
 
+              req.open('POST','./actions/register.php')
+              req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
+              req.send(`avalible=true&bid=${bid}&bicycle=${bicycleid}&state=${state}`)
+
+              e.preventDefault()
+
+            }catch(e){
+              alert(e)
+            }
           })
         })
+
+
+
+        
         
     })
     function removeErrors(){

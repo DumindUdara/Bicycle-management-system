@@ -117,7 +117,7 @@ function getUsernameFromID($conn,$id){
 
 function getAllBookings($conn){
 
-  $sql="SELECT * FROM bookings ORDER BY bid DESC";
+  $sql="SELECT * FROM bookings ORDER BY id DESC";
   $res=$conn->query($sql);
 
   $bookings=[];

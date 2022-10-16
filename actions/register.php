@@ -126,6 +126,56 @@ if(isset($_POST['register'])){
 
 
 
+}else if(isset($_POST['update'])){
+
+  $hd=$_POST['hd'];
+  $ht=$_POST['ht'];
+  $bid=$_POST['bid'];
+
+
+  $stm=$conn->prepare("UPDATE bookings SET handover_on=? , handover_at=? WHERE id=?");
+  if($stm){
+    $stm->bind_param('ssi',$hd,$ht,$bid);
+    if($stm->execute()){
+      $_SESSION['msg']='Updated!';
+      header("Location:../edit.php");
+    }else{
+      $_SESSION['error']='update failed!';
+      header("Location:../edit.php");
+    }
+  }else{
+    $_SESSION['error']='update failed!';
+    header("Location:../edit.php");
+  }
+
+  
+}else if(isset($_POST['avalible'])){
+
+  $bid=$_POST['bid'];
+  $bicycle=$_POST['bicycle'];
+  $state=$_POST['state'];
+
+  if($state==0){
+    setAvailable($conn,1,$bicycle);
+  }
+
+
+  $sql="UPDATE bookings SET approve=? WHERE id=?";
+  $stm=$conn->prepare($sql);
+
+  if($stm){
+    $stm->bind_param('ii',$state,$bid);
+
+    if($stm->execute()){
+      echo 1;
+
+    }else{
+      echo 0;
+    }
+  }else{
+    echo 0;
+  }
+
 }
 
 function validateMovbile($number){
