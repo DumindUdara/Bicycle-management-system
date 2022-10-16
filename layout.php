@@ -55,7 +55,7 @@ if(isset($_SESSION['login'])){
   <nav class="navbar navbar-expand-lg  w-100 bg-light">
     <div class="container-fluid d-flex justify-content-between ">
       <div class="logo w-25 d-none d-lg-block">
-        <a >Navbar scroll</a>
+        <img src="./assests/images/logo.png" class=" ms-5" alt="" width="60%">
       </div>
       
       <div class="icons w-75 d-flex align-items-center w-100 justify-content-end border border-1 border-white
