@@ -12,7 +12,7 @@ if(isset($_SESSION['login'])){
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link
+  <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
     rel="stylesheet"
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
@@ -69,7 +69,7 @@ if(isset($_SESSION['login'])){
           </li>
           <li><i class="fa-solid fa-cart-circle-arrow-up "></i>Cart</li>
           <li><i class="fa-solid fa-user "></i><a href="./dashboard.php" class=" text-dark text-decoration-none"> My Account </a></li>
-          <li><i class="fa-regular fa-file-pen"></i>View Order</li>
+          <li><i class="fa-regular fa-file-pen"></i><a href="#view" class=" text-dark  text-decoration-none">View Order</a></li>
         </ul>
         
       </div>

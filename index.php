@@ -13,16 +13,26 @@ if(isset($_GET['date'])){
 }
 
 
-
-
-
 ?>
 
 <div class="container-fluid mt-0 d-flex w-100 border border-4 align-items-center justify-content-around" style="background-color:rgba(154, 191, 214,0.6) ;">
     <img src="./assests/images/banner.jpg" alt="" width="80%">
     
   </div>
+  <?php
+
+    if(isset($_SESSION['error'])){
+
+      echo "<p class='alert msg  my-2 alert-danger text-center'>{$_SESSION['error']}</p>";
+      $_SESSION['error']=null;
+    }else if(isset($_SESSION['msg'])){
+      echo "<p class='alert msg  my-2 alert-success text-center'>{$_SESSION['msg']}</p>";
+      $_SESSION['msg']=null;
+    }
+
+    ?>
   <div class="container-fluid align-items-center flex-column d-flex justify-content-around" style="background-color:#bfbfbf ;">
+  
     <div class="w-100">
       <p class=" text-center m-0"><strong>Booking Space</strong></p>
     </div>
@@ -52,7 +62,7 @@ if(isset($_GET['date'])){
 
 <div class="container-fluid">
 
-    <div class="row w-100 mx-auto justify-content-around">
+    <div class="row w-100 mx-auto justify-content-around" id="view">
         <?php
           $sql="SELECT * FROM bicycles WHERE isavailable=1";
           $res=$conn->query($sql);
@@ -63,8 +73,14 @@ if(isset($_GET['date'])){
                   <div class="card text-center p-0" >
                     <div class="card-body">
                       <h5 class="card-title text-center"><?= ucfirst($row['name'])?></h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="./booking.php?bid=<?= $row['id']?>&date=<?= $date?>" class="btn btn-success w-100 m-0">available</a>
+                      <p class="card-text">Rider Single Speed MTB 26-20200054</p>
+                      <form action="./booking.php" method="POST" class="w-100">
+
+                        <input type="hidden" name='bid' value="<?= $row['id'] ?>" >
+                        <input type="hidden" name="date" value="<?= $date ?>">
+
+                        <input type="submit" class="btn btn-success w-100 m-0" value="Available">
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -76,3 +92,19 @@ if(isset($_GET['date'])){
         ?>
     </div>  
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded",()=>{
+
+      setInterval(() => {
+          removeErrors()
+      }, 2000);
+      
+  })
+  function removeErrors(){
+      let errors=document.querySelectorAll('.msg')
+      errors.forEach(e=>{
+          e.remove()
+      })
+  }
+  </script>                                    

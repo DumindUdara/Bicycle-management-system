@@ -14,10 +14,10 @@ if(!isset($_SESSION['login'])){
 </div>
 
 <div class="container-fluid d-flex align-items-center py-3 pl-4" style="background-color:rgba(123, 156, 6,1) ;">
-  <div class="username w-25">
+  <div class="username w-25 px-4">
 
     <i class="fa-solid fa-user " style="color:white ;transform: scale(1.4);"></i>
-    <span class=" text-white ms-4"><?= $_SESSION['username']?></span>
+    <span class=" text-white ms-4 "><?= $_SESSION['username']?></span>
   </div>
   <div class="menu d-flex align-items-center w-25 justify-content-between">
     <p class="m-0"><a href="" class=" text-white text-decoration-none"> USER HOME</a></p>
@@ -41,18 +41,28 @@ if(!isset($_SESSION['login'])){
     transition: 300ms linear;
     transform: scale(1.02);
   }
-  .item-box{
-    
-  }
+ 
+   @media (max-width:780px){
+      .username {
+        width: 50%!important;
+      }
+      .menu{
+        width: 50%!important;
+      }
+
+      .items{
+        width: 20%!important;
+      }
+   }
 
 </style>
 
 <div class="container d-flex flex-wrap gap-5 item-box">
 
-  <div style="width:15% ; height: 100px; border-radius: 15px;" class=" bg-success d-flex align-items-center justify-content-around item">
+  <div style="width:15% ; height: 100px; border-radius: 15px;" class=" bg-success d-flex align-items-center justify-content-around item items">
     <i class="fa-solid fa-house text-white bd-icon" ></i>
   </div>
-  <div style="width: 15%; height: 100px; border-radius: 15px;" class="item bg-success d-flex align-items-center justify-content-around flex-column">
+  <div style="width: 15%; height: 100px; border-radius: 15px;" class="item bg-success d-flex align-items-center justify-content-around flex-column items">
     <a href="./index.php" class=" text-white text-decoration-none"><i class="fa-sharp fa-solid fa-bicycle text-white bd-icon"></i></a>
   </div>
 

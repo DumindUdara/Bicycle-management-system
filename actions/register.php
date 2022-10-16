@@ -60,12 +60,28 @@ if(isset($_POST['register'])){
       $data=$res->fetch_assoc();
       $hash=$data['password'];
       if(password_verify($pass,$hash)){
-        $_SESSION['login']=true;
-        $_SESSION['uid']=$data['user_id'];
-        $_SESSION['email']=$data['email'];
-        $_SESSION['username']=$data['username'];
-        $_SESSION['msg']='Loged in successful';
-        header("Location:../dashboard.php");
+
+        // echo isAdmin($conn,$username);
+
+
+        if(isAdmin($conn,$username)){
+          $_SESSION['login']=true;
+          $_SESSION['uid']=$data['user_id'];
+          $_SESSION['email']=$data['email'];
+          $_SESSION['username']=$data['username'];
+          $_SESSION['admin']=1;
+          $_SESSION['msg']='Loged in successful';
+          header("Location:../admindashboard.php");
+        }else{
+          $_SESSION['login']=true;
+          $_SESSION['uid']=$data['user_id'];
+          $_SESSION['email']=$data['email'];
+          $_SESSION['username']=$data['username'];
+          $_SESSION['msg']='Loged in successful';
+          header("Location:../dashboard.php");
+        }
+
+        
       }else{
         $_SESSION['error']='Invalid Credentials';
         // echo 'pass dont match';
@@ -80,6 +96,36 @@ if(isset($_POST['register'])){
     $_SESSION['error']=$conn->error;
     header("Location:../login.php");
   }
+}else if(isset($_POST['book'])){
+  $bid=$_POST['bid'];
+  $reqon=$_POST['reqon'];
+  $reqat=$_POST['reqat'];
+  $uid=$_SESSION['uid'];
+
+  $co=htmlspecialchars($_POST['comment']);
+
+
+  $stm=$conn->prepare("INSERT INTO bookings(bid,user_id,comment,req_on,req_at) VALUES(?,?,?,?,?)");
+  
+  if($stm){
+    $stm->bind_param('iisss',$bid,$uid,$co,$reqon,$reqat);
+
+    if($stm->execute()){
+      if(setAvailable($conn,0,$bid)){
+        $_SESSION['msg']='you bookign is pending!';
+        header("Location:../index.php");
+      }else{
+        $_SESSION['error']='your booking is not added! 232'.$conn->error;
+        header("Location:../booking.php?bid={$bid}&date={$reqon}");
+      }
+    }else{
+      $_SESSION['error']='your booking is not added!';
+      header("Location:../booking.php?bid={$bid}&date={$reqon}");
+    }
+  }
+
+
+
 }
 
 function validateMovbile($number){
