@@ -75,7 +75,7 @@ include './layout.php';
 
                             <div class="row form-group mb-4">
                                 <div class="col-md-12 mb-3 mb-md-0">
-                                    <label class="text-black">password</label>
+                                    <label class="text-black">Password</label>
                                     <input type="password" name="password" class="form-control">
                                 </div>
                             </div>

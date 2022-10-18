@@ -3,6 +3,7 @@ include_once './actions/config.php';
 include './layout.php';
 
 if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
+  $_SESSION['error']='Not authorized!';
   header("Location:../index.php");
 
 }
