@@ -1,6 +1,12 @@
 <?php
 include_once './config.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php';
+
 if($_SERVER['REQUEST_METHOD']=='GET'){
   header('Location:../index.php');
 }
@@ -131,21 +137,30 @@ if(isset($_POST['register'])){
   $hd=$_POST['hd'];
   $ht=$_POST['ht'];
   $bid=$_POST['bid'];
+  $bicycle=$_POST['bicycleid'];
 
 
   $stm=$conn->prepare("UPDATE bookings SET handover_on=? , handover_at=? WHERE id=?");
   if($stm){
     $stm->bind_param('ssi',$hd,$ht,$bid);
     if($stm->execute()){
-      $_SESSION['msg']='Updated!';
-      header("Location:../edit.php");
+      
+      if(setAvailable($conn,1,$bicycle)){
+        $_SESSION['msg']='Updated! <br>Bicycle is Now available';
+        header("Location:../handover.php");
+      }else{
+        $_SESSION['msg']='Updated! <br> Bicycle is not available';
+        header("Location:../handover.php");
+      }
+
+      
     }else{
       $_SESSION['error']='update failed!';
-      header("Location:../edit.php");
+      header("Location:../handover.php");
     }
   }else{
     $_SESSION['error']='update failed!';
-    header("Location:../edit.php");
+    header("Location:../handover.php");
   }
 
   
@@ -154,21 +169,30 @@ if(isset($_POST['register'])){
   $bid=$_POST['bid'];
   $bicycle=$_POST['bicycle'];
   $state=$_POST['state'];
+  $userid=$_POST['userid'];
 
   if($state==0){
     setAvailable($conn,1,$bicycle);
   }
 
+  $email=getUsernameFromID($conn,$userid);
 
+
+  
   $sql="UPDATE bookings SET approve=? WHERE id=?";
   $stm=$conn->prepare($sql);
 
   if($stm){
     $stm->bind_param('ii',$state,$bid);
 
-    if($stm->execute()){
-      echo 1;
+    if(sendApproveMail($bid,$email[2])){
+      if($stm->execute()){
 
+        echo 1;
+
+      }else{
+        echo 0;
+      }
     }else{
       echo 0;
     }
@@ -176,6 +200,37 @@ if(isset($_POST['register'])){
     echo 0;
   }
 
+}else if(isset($_POST['delete'])){
+
+  $bookid=$_POST['bid'];
+
+  $sql="DELETE FROM bookings WHERE id={$bookid}";
+  if($conn->query($sql)==TRUE){
+    echo $bookid;
+  }else{
+    echo 0;
+  }
+}else if(isset($_POST['add'])){
+
+  $bname=htmlspecialchars($_POST['bikename']);
+  $dis=htmlspecialchars($_POST['dis']);
+
+  $sql="INSERT INTO bicycles(name,discription) VALUES(?,?)";
+  $stm=$conn->prepare($sql);
+
+  if($stm){
+    $stm->bind_param('ss',$bname,$dis);
+    if($stm->execute()){
+      $_SESSION['msg']='Bicycle has been added!';
+      header("Location:../editbicycle.php");
+    }else{
+      $_SESSION['error']='Bicycle Added Failed!';
+      header("Location:../editbicycle.php");
+    }
+  }else{
+    $_SESSION['error']='Bicycle Added Failed!';
+    header("Location:../editbicycle.php");
+  }
 }
 
 function validateMovbile($number){
@@ -186,6 +241,43 @@ function validateMovbile($number){
   }else{
     return false;
   }
+}
+
+function sendApproveMail($bid,$toEmail){
+
+  try{
+    $mail = new PHPMailer(true);
+
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'akpgamingkingdom@gmail.com';                     //SMTP username
+    $mail->Password   = '@AKPG2020';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = 465; 
+
+
+    $mail->setFrom('akpgamingkingdom@gmail.com', 'Mailer');   //Add a recipient
+    $mail->addAddress($toEmail);               //Name is optional
+    $mail->addReplyTo('akpgamingkingdom@gmail.com', 'Information');
+
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Booking Comformation!';
+    $mail->Body    = "Your booking has been approved!<br>Conform it by provinding this number to the office <br><3>{$bid}</h3>";
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    $mail->send();
+
+    return true;
+
+  }catch(Exception $e){
+    return false;
+  }
+
+
+
+
 }
 
 

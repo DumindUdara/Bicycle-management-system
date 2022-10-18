@@ -11,13 +11,35 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
 
 <style>
 
-  i.bd-icon{
-    transform: scale(2.5);
+  i.box-icon{
+    transform: scale(3);
+    color: white;
   }
-  .item:hover{
-    cursor: pointer;
-    transition: 300ms linear;
-    transform: scale(1.02);
+  .icon-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    justify-items: center;
+    height: 95px;
+    margin: 20px;
+    padding: 5px;
+  }
+
+  .icon-box>p{
+    font-weight: 500;
+    color: white;
+    margin: 0;
+    text-align: center;
+    margin-top: 10px;
+    word-wrap: break-word;
+
+  }
+  .board-icon{
+    border-radius: 25px;
+    justify-content: space-around;
+    align-items: center;
+
   }
  
    @media (max-width:780px){
@@ -40,26 +62,75 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
     <div class="col-12">
       
 
-      <div class="container d-flex flex-wrap gap-5 item-box">
+      <div class="container">
+        <div class="row gap-4 mx-auto ">
 
-        <div style="width:15% ; height: 100px; border-radius: 15px;" class=" bg-success d-flex align-items-center justify-content-around item items">
-          <i class="fa-solid fa-house text-white bd-icon" ></i>
-        </div>
+          <div 
+            class="col-5 col-md-3 col-lg-2 board-icon bg-success  justify-content-around align-items-center " 
+            style="height: 120px;">
 
-        <div style="width: 15%; height: 100px; border-radius: 15px;" class="item bg-success d-flex align-items-center justify-content-around flex-column items">
-          <a href="./index.php" class=" text-white text-decoration-none"><i class="fa-sharp fa-solid fa-bicycle text-white bd-icon"></i></a>
-        </div>
+            <div class="icon-box" style="padding: 0;" >
+              
+                <i class="fa-solid fa-house box-icon"></i>
+              
+              
+            </div>
+          </div>
 
-        <div style="width: 15%; height: 100px; border-radius: 15px;" class="item bg-success d-flex align-items-center justify-content-around flex-column items">
-          <a href="./edit.php" class=" text-white text-decoration-none">
-            <i class="fa-sharp fa-solid fa-clipboard-list text-white bd-icon"></i></a>
+          <div 
+            class="col-5 col-md-3 col-lg-2 board-icon bg-success  justify-content-around align-items-center " 
+            style="height: 120px;">
 
+            <div class="icon-box" >
+              <a href="./editbicycle.php">
+                <i class="fa-solid fa-person-biking box-icon"></i>
+              </a>
+              <p>
+                Bicycle Setup
+              </p>
+            </div>
+          </div>
+          <div 
+            class="col-5 col-md-3 col-lg-2 board-icon bg-success  justify-content-around align-items-center " 
+            style="height: 120px;">
+
+            <div class="icon-box" >
+              <a href="./approv.php">
+                <i class="fa-solid fa-bicycle box-icon"></i>
+              </a>
+              <p>
+                Booking Approval
+              </p>
+            </div>
+          </div>
+          <div 
+            class="col-5 col-md-3 col-lg-2 board-icon bg-success  justify-content-around align-items-center " 
+            style="height: 120px;">
+
+            <div class="icon-box" >
+              <a href="./handover.php">
+                <i class="fa-solid fa-bicycle box-icon"></i>
+              </a>
+              <p>
+                Issue Management
+              </p>
+            </div>
+          </div>
+          <div 
+            class="col-5 col-md-3 col-lg-2 board-icon bg-success  justify-content-around align-items-center " 
+            style="height: 120px;">
+
+            <div class="icon-box" >
+              <a href="./edit.php">
+                <i class="fa-sharp fa-solid fa-reply-all box-icon"></i>
+              </a>
+              <p>
+                Resturn Management
+              </p>
+            </div>
+          </div>
           
-          
         </div>
-
-       
-
       </div>
     </div>
   </div>

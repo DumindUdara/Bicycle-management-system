@@ -3,9 +3,12 @@ include_once './actions/config.php';
 include_once './layout.php';
 
 
-if(!isset($_SESSION['login'])){
-  $_SESSION['error']='you need to login to veiw the dashboard!';
-  header("Location:./login.php");
+if($_SERVER['REQUEST_METHOD']=='POST' || $_SERVER['REQUEST_METHOD']=='GET'){
+  
+  if(!isset($_SESSION['login'])){
+    $_SESSION['error']='you need to login to veiw the dashboard!';
+    header("Location:./login.php");
+  }
 }
 
 if(isset($_POST['bid'])){
@@ -120,27 +123,25 @@ if(isset($_POST['date'])){
             <?php
             $books=getBookingsForUser($conn,$_SESSION['uid']);
 
-           foreach ($books as $book) {?>
-            <tr>
-              <td><?= $book['bid']?></td>
-              <td><?= $book['req_on']?></td>
-              <td><?= $book['req_at']?></td>
-              <td><?= $book['handover_on']?></td>
-              <td><?= $book['handover_at']?></td>
-              <td><button class="btn btn-sm <?= $book['approve']==0?'btn-danger':'btn-success' ?> w-100">
-              <?= 
-              $book['approve']==0?'No':'Yes'
-              
-              ?>
-            </button></td>
-            </tr>
+           if($books!=null){
+            foreach ($books as $book) {?>
+              <tr>
+                <td><?= $book['bid']?></td>
+                <td><?= $book['req_on']?></td>
+                <td><?= $book['req_at']?></td>
+                <td><?= $book['handover_on']?></td>
+                <td><?= $book['handover_at']?></td>
+                <td><button class="btn btn-sm <?= $book['approve']==0?'btn-danger':'btn-success' ?> w-100">
+                <?= 
+                $book['approve']==0?'No':'Yes'
+                
+                ?>
+              </button></td>
+              </tr>
+            <?php }
             
             
-           <?php }
-
-
-
-            ?>
+            }?>
           </tr>
         </tbody>
       </table>
@@ -148,19 +149,3 @@ if(isset($_POST['date'])){
     </div>
   </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded",()=>{
-
-        setInterval(() => {
-            removeErrors()
-        }, 2000);
-        
-    })
-    function removeErrors(){
-        let errors=document.querySelectorAll('.msg')
-        errors.forEach(e=>{
-            e.remove()
-        })
-    }
-    </script>

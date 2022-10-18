@@ -9,7 +9,7 @@ include './layout.php';
 if(isset($_GET['date'])){
   $date=$_GET['date'];
 }else{
-  $date= strval(date('m-d-Y',time()));
+  $date= strval(date('Y-m-d',time()));
 }
 
 
@@ -52,13 +52,24 @@ if(isset($_GET['date'])){
       <form action="<?= $_SERVER['PHP_SELF']?>" >
         <div class="input-group mb-3">
           
-          <input required type="date" class="form-control" name="date" value="<?= strval(date('m/d/Y',time())) ?>"  aria-describedby="button-addon2">
+          <input required type="date" class="form-control" name="date" value="<?= strval(date('Y-d-m',time())) ?>"  aria-describedby="button-addon2">
           <button class="btn btn-success" type="submit" id="button-addon2">Button</button>
         </div>
      </form>
      </div>
     </div>
   </div>
+
+  <style>
+    .dis{
+      height: 60px;
+      overflow-y: scroll;
+      
+    }
+    .dis::-webkit-scrollbar{
+      display: none;
+    }
+  </style>
 
 <div class="container-fluid">
 
@@ -69,11 +80,13 @@ if(isset($_GET['date'])){
           if($res==TRUE){
             if($res->num_rows>0){
               while($row=$res->fetch_assoc()){ ?>
-                <div class="col-10 col-md-4 my-3 ">
+                <div class="col-10 col-md-3 my-3 ">
                   <div class="card text-center p-0" >
                     <div class="card-body">
                       <h5 class="card-title text-center"><?= ucfirst($row['name'])?></h5>
-                      <p class="card-text">Rider Single Speed MTB 26-20200054</p>
+                      <div class="dis w-100 my-2">
+                        <p class="card-text"><?= $row['discription']==null?'New Bicycle!':ucfirst($row['discription']) ?> </p>
+                      </div>
                       <form action="./booking.php" method="POST" class="w-100">
 
                         <input type="hidden" name='bid' value="<?= $row['id'] ?>" >
@@ -93,18 +106,4 @@ if(isset($_GET['date'])){
     </div>  
 </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded",()=>{
-
-      setInterval(() => {
-          removeErrors()
-      }, 2000);
-      
-  })
-  function removeErrors(){
-      let errors=document.querySelectorAll('.msg')
-      errors.forEach(e=>{
-          e.remove()
-      })
-  }
-  </script>                                    
+<?php  include './footer.php'; ?>

@@ -21,6 +21,9 @@ if(isset($_SESSION['login'])){
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <title>Document</title>
+
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/remove-error.js"></script>
 </head>
 <body>
 
@@ -68,7 +71,27 @@ if(isset($_SESSION['login'])){
           <?= $logedin? '</i><a href="./actions/config.php?action=logout" class="text-dark text-decoration-none" > Logout</a>' : '</i><a href="./login.php" class="text-dark text-decoration-none"> Login</a>'?>
           </li>
           <li><i class="fa-solid fa-cart-circle-arrow-up "></i>Cart</li>
-          <li><i class="fa-solid fa-user "></i><a href="./dashboard.php" class=" text-dark text-decoration-none"> My Account </a></li>
+          <li>
+            <?php
+
+            
+
+            if(isset($_SESSION['login'])){
+              if(isset($_SESSION['admin'])){
+                echo "<i class='fa-solid fa-user ''></i><a href='./admindashboard.php' class='' text-dark text-decoration-none'> My Account </a>";
+              }else{
+                echo "<i class='fa-solid fa-user ''></i><a href='./dashboard.php' class='' text-dark text-decoration-none'> My Account </a>";
+              }
+            }else{
+              $_SESSION['error']='you need to login first!';
+              echo "<i class='fa-solid fa-user ''></i><a href='./login.php' class='' text-dark text-decoration-none'> My Account </a>";
+            }
+
+
+            ?>
+
+
+          </li>
           <li><i class="fa-regular fa-file-pen"></i><a href="#view" class=" text-dark  text-decoration-none">View Order</a></li>
         </ul>
         
@@ -101,7 +124,7 @@ if(isset($_SESSION['login'])){
   <div class="w-100" style="height:60px;background-color: #b5b5b5;">
     <ul class="list-unstyled nav2 d-flex w-50 align-content-around align-items-center justify-content-around ">
       <li class="nav-item-bottom">
-        Home
+        <a href="./index.php">Home</a>
       </li>
       <li class="nav-item-bottom">View</li>
       <li class="nav-item-bottom">Book</li>

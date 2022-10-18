@@ -77,12 +77,13 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
                     $rd=explode('-',$data['req_on'])[2];
 
                     $total=0;
+                    $du=0;
 
                     if($data['handover_on']!=null){
                       $hd=explode('-',$data['handover_on'])[2];
                       
-
-                      $total=((int)$hd-$rd)*100;
+                      $du=$hd-$rd;
+                      $total=((int)$du)*100;
                     }
                     ?>
 
@@ -96,11 +97,21 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
                     </div>
                     <div class="mb-3">
                       <label  class="form-label">Booked By</label>
-                      <input type="email" name="uname" value="<?= getUsernameFromID($conn,$data['user_id'])?>" readonly class="form-control">
+                      <input type="email" name="uname" value="<?= getUsernameFromID($conn,$data['user_id'])[0]?>" readonly class="form-control">
+                    </div>
+                    
+
+                    <div class="mb-3">
+                      <label  class="form-label">Duration Rental</label>
+                      <input type="email" name="reqat" readonly value=" <?= $du ?> Day(s)" readonly class="form-control">
                     </div>
                     <div class="mb-3">
-                      <label  class="form-label">Cost</label>
-                      <input type="email" name="reqat" value="Rs <?= $total ?>" readonly class="form-control">
+                      <label  class="form-label">Fees Per day</label>
+                      <input type="email" name="reqat" value="Rs 100" readonly class="form-control">
+                    </div>
+                    <div class="mb-3">
+                      <label  class="form-label">Total Fee</label>
+                      <input type="email" name="reqat" value="Rs <?= number_format((float)$total,2,'.',',') ?>" readonly class="form-control">
                     </div>
 
                   <?php }else{?>
@@ -119,6 +130,7 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
 
             
           </div>
+          
         </div>
       </div>
 
@@ -129,123 +141,48 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin']!=1){
         <thead>
           <tr style="font-size:0.8rem ;">
             <th>BICYCLE ID</th>
-            <th >REQUIRED ON</th>
-            <th>HANDOVER ON</th>
-            <th>HANDOVER AT</th>
-            <th></th>
-            <th>Apporov</th>
+            <th>RENTED ON</th>
+            <th>RENTED AT</th>
+            <th>HANDOVER BY</th>
+            <th>HANDOVER TIME</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <?php
             $books=getAllBookings($conn);
-
-           foreach ($books as $book) {?>
-            <tr>
-              <td><?= $book['bid']?></td>
-              <td  ><?= $book['req_on']?></td>
-              <?php
-              if($book['handover_on']==null){?>
-                <form class="detail-form" action="./actions/register.php" method="POST">
-                  <input type="hidden" value="<?= $book['id'] ?>" name="bid">
-                  <td><input type="date" required name="hd" class="form-control form-control-sm"></td>
-                  <td><input type="time" required name="ht" class=" form-control form-control-sm"></td>
-                  <td><button type="submit" name="update"><i class="fa-solid fa-floppy-disk text-success"></i></button></td>
-                </form>
-
-              <?php }
-              else{?>
-                <td  ><?= $book['handover_on']?></td>
-                <td  ><?= $book['handover_at']?></td>
-                <td></td>
-
-              <?php }
-              ?>
-              <td><button class="btn btn-sm app-btn <?= $book['approve']==0?'btn-danger':'btn-success' ?> w-100"
-              data-bid=<?= $book['id']?> 
-              data-state=<?= $book['approve']==0?1:0 ?>
-              data-bicycle=<?= $book['bid'] ?> >
-              <?= 
-              $book['approve']==0?'&times':'&#10003';
+            
+            if($books!=null){
+              foreach ($books as $book) {
               
               ?>
-            </button></td>
-            </tr>
             
-            
-           <?php }
+              <tr>
+                <td><?= $book['bid']?></td>
+                <td  ><?= $book['req_on']?></td>
+                <td  ><?= $book['req_at']?></td>
+                <?= $book['handover_on']==null?'<td class="text-warning">Not Handoverd!</td>':"<td >{$book['handover_on']}</td>" ?>
+                <?= $book['handover_at']==null?'<td class="text-warning">Not Handoverd!</td>':"<td >{$book['handover_at']}</td>" ?>
+                
+                
+
+            <?php }
 
 
 
-            ?>
+              
+            }else{?>
+
+              <td colspan="8">
+                <p class="alert alert-warning text-center">No Bookings Found!</p>
+              </td>
+
+            <?php }?>
+
+           
           </tr>
         </tbody>
       </table>
-      <hr>
     </div>
   </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded",()=>{
-
-        setInterval(() => {
-            removeErrors()
-        }, 2000);
-
-
-        let appbtns=document.querySelectorAll('.app-btn')
-        appbtns.forEach(btn=>{
-          btn.addEventListener('click',(e)=>{
-
-            const bid=e.target.dataset.bid;
-            const bicycleid=e.target.dataset.bicycle;
-            const state=e.target.dataset.state;
-
-            try{
-              var req=new XMLHttpRequest()
-
-              req.onreadystatechange=function(){
-                if(this.readyState==4 && this.status==200){
-                  if(parseInt(this.responseText)==1){
-                    
-                    if(state==1){
-                      e.target.classList.remove('bg-danger')
-                      e.target.classList.add('bg-success')
-                      e.target.innerHTML='&#10003'
-                    }else{
-                      e.target.classList.remove('bg-success')
-                      e.target.classList.add('bg-danger')
-                      e.target.innerHTML='&times'
-                    }
-                    
-                  }
-                }
-              }
-
-              req.open('POST','./actions/register.php')
-              req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-              req.send(`avalible=true&bid=${bid}&bicycle=${bicycleid}&state=${state}`)
-
-              e.preventDefault()
-
-            }catch(e){
-              alert(e)
-            }
-          })
-        })
-
-
-
-        
-        
-    })
-    function removeErrors(){
-        let errors=document.querySelectorAll('.msg')
-        errors.forEach(e=>{
-            e.remove()
-        })
-    }
-    </script>

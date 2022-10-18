@@ -17,6 +17,9 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
   $_SESSION['login']=null;
   $_SESSION['email']=null;
   $_SESSION['msg']='you have loged out successfuly';
+  if(isset($_SESSION['admin'])){
+    $_SESSION['admin']=null;
+  }
   header("Location:../index.php");
 }
 
@@ -101,11 +104,12 @@ function isAdmin($conn,$username){
 
 function getUsernameFromID($conn,$id){
 
-  $sql="SELECT username FROM user WHERE user_id={$id}";
+  $sql="SELECT username,contact,email FROM user WHERE user_id={$id}";
   $res=$conn->query($sql);
   if($res==TRUE){
     if($res->num_rows>0){
-      return $res->fetch_assoc()['username'];
+      $data=$res->fetch_assoc();
+      return [$data['username'],$data['contact'],$data['email']];
     }else{
       return null;
     }
@@ -113,6 +117,7 @@ function getUsernameFromID($conn,$id){
     return null;
   }
 }
+
 
 
 function getAllBookings($conn){

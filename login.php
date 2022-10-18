@@ -1,8 +1,6 @@
 <?php 
-
-include './layout.php';
-
 session_start();
+include './layout.php';
 
 
 ?>
@@ -89,20 +87,3 @@ session_start();
             </div>
         </section>
     </div>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded",()=>{
-
-            setInterval(() => {
-                removeErrors()
-            }, 2000);
-            
-        })
-        function removeErrors(){
-            let errors=document.querySelectorAll('.alert')
-            errors.forEach(e=>{
-                e.remove()
-            })
-        }
-    </script>
