@@ -76,7 +76,7 @@ if(isset($_SESSION['login'])){
 
           <?= $logedin? '</i><a href="./actions/config.php?action=logout" class=" text-decoration-none" > Logout</a>' : '</i><a href="./login.php" class=" text-decoration-none"> Login</a>'?>
           </li>
-          <li><i class="fa-solid fa-cart-circle-arrow-up "></i><span> Cart</span></li>
+          <li><i class="fa-solid fa-cart-arrow-down"></i><span> Cart</span></li>
           <li>
             <?php
 
@@ -99,7 +99,7 @@ if(isset($_SESSION['login'])){
 
 
           </li>
-          <li><i class="fa-regular fa-memo"></i>
+          <li><i class="fa-solid fa-bookmark"></i>
           <a href="" class="  text-decoration-none"><span> View Order</span></a></li>
         </ul>
         
