@@ -1,9 +1,11 @@
 <?php
 
-
-
 include_once './actions/config.php';
 include './layout.php';
+
+if(!isset($_SESSION['admin']) || !$_SESSION['admin']==1){
+  header("Location:./login.php?msg=you need to login first");
+}
 
 ?>
 
