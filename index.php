@@ -4,8 +4,6 @@ include_once './actions/config.php';
 include './layout.php';
 
 
-
-
 if(isset($_GET['date'])){
   $date=$_GET['date'];
 }else{
@@ -99,7 +97,7 @@ if(isset($_GET['date'])){
                 </div>
           <?php }
             }else{
-              echo 'no data';
+              echo '<p class="alert alert-warning text-center">No Data Found! </p>';
             }
           }
         ?>

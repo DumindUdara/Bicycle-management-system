@@ -16,6 +16,7 @@ try{
 if(isset($_GET['action']) && $_GET['action']=='logout'){
   $_SESSION['login']=null;
   $_SESSION['email']=null;
+  $_SESSION['error']=null;
   $_SESSION['msg']='you have loged out successfuly';
   if(isset($_SESSION['admin'])){
     $_SESSION['admin']=null;

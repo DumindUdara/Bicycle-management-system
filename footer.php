@@ -11,8 +11,8 @@
           <li><a href="https://lms.sltc.ac.lk/">LMS</a></li>
           <li><a href="https://sims.sltc.ac.lk/">SIMS</a></li>
           <li><a href="#">FAQ</a></li>
-          <li><a href="#">Legal</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="https://edu.sltc.ac.lk/about-us">About Us</a></li>
+          <li><a href="https://edu.sltc.ac.lk/contact">Contact</a></li>
         </ul>
 
         <div class="social mb-2">

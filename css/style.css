@@ -1,5 +1,5 @@
 body {
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+  font-family: "Times New Roman", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -55,3 +55,38 @@ a {
       color: #dd4d5a; }
   .footer-16371 .copyright {
     color: #999999; }
+
+
+.btn-success {
+  background-color: rgb(95, 185, 95);
+  border-color: rgb(95, 185, 95);
+  border-radius: 10px;
+}
+
+.btn-success:hover {
+  background-color: rgb(109, 199, 109);
+}
+
+.btn-danger {
+  background-color: rgb(185, 62, 62);
+  border-color: rgb(185, 62, 62);
+
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: rgb(46, 137, 227);
+  border-radius: 10px;
+}
+
+.btn-danger:hover {
+  background-color: rgb(237, 48, 48);
+}
+
+.alert {
+  border-radius: 0;
+  opacity: 0.8;
+  font-family: monospace;
+  font-weight: bold;
+
+}

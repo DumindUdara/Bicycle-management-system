@@ -12,11 +12,16 @@ include './layout.php';
                     <?php
 
                     if (isset($_SESSION['error'])){
-                        echo "<p class=' alert alert-danger text-center'>{$_SESSION['error']}</p>";
+                        echo "<p class=' alert alert-danger msg text-center'>{$_SESSION['error']}</p>";
                         $_SESSION['error']=null;
                     }else if(isset($_SESSION['msg'])){
-                        echo "<p class=' alert alert-success text-center'>{$_SESSION['msg']}</p>";
+                        echo "<p class=' alert alert-success msg text-center'>{$_SESSION['msg']}</p>";
                         $_SESSION['msg']=null;
+                    }
+
+                    if(isset($_GET['msg'])){
+                        echo "<p class=' alert alert-danger msg text-center'>{$_GET['msg']}</p>";
+                        
                     }
 
 

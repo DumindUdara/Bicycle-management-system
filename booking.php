@@ -6,8 +6,8 @@ include_once './layout.php';
 if($_SERVER['REQUEST_METHOD']=='POST' || $_SERVER['REQUEST_METHOD']=='GET'){
   
   if(!isset($_SESSION['login'])){
-    $_SESSION['error']='you need to login to veiw the dashboard!';
-    header("Location:./login.php");
+    // $_SESSION['error']='you need to login to veiw the dashboard!';
+    header("Location:./login.php?msg=you need to login first");
   }
 }
 
