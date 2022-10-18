@@ -25,6 +25,7 @@ if(!isset($_SESSION['admin']) || !$_SESSION['admin']==1){
 <div class="container mt-3">
   <div class="row">
     <div class="col-12">
+      
       <?php
 
       if(isset($_SESSION['error'])){
