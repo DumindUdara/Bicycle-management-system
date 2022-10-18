@@ -51,7 +51,7 @@ if(isset($_GET['date'])){
         <div class="input-group mb-3">
           
           <input required type="date" class="form-control" name="date" value="<?= strval(date('Y-d-m',time())) ?>"  aria-describedby="button-addon2">
-          <button class="btn btn-success" type="submit" id="button-addon2">Button</button>
+          <button class="btn btn-success" type="submit" id="button-addon2">Search</button>
         </div>
      </form>
      </div>

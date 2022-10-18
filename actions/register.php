@@ -251,9 +251,9 @@ function sendApproveMail($bid,$toEmail){
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->SMTPAuth   = false;                                   //Enable SMTP authentication
     $mail->Username   = 'akpgamingkingdom@gmail.com';                     //SMTP username
-    $mail->Password   = '@AKPG2020';                               //SMTP password
+    $mail->Password   = '********';                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465; 
 
