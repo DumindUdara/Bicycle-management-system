@@ -265,16 +265,16 @@ function sendApproveMail($bid,$toEmail){
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'smtp.titan.email';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'info@forgear.lk';                     //SMTP username
-    $mail->Password   = 'MtGiUdJsKg@2022';                               //SMTP password
+    $mail->Username   = 'brs@forgear.org.lk';                     //SMTP username
+    $mail->Password   = 'brs123456';                               //SMTP password
     // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
      $mail->SMTPSecure='ssl';
     $mail->Port       = 465; 
 
 
-    $mail->setFrom('info@forgear.lk', 'Admin');   //Add a recipient
+    $mail->setFrom('brs@forgear.org.lk', 'Admin');   //Add a recipient
     $mail->addAddress($toEmail);               //Name is optional
-    $mail->addReplyTo('info@forgear.lk', 'Information');
+    $mail->addReplyTo('brs@forgear.org.lk', 'Information');
 
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Booking Comformation!';
