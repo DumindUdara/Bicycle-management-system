@@ -248,23 +248,25 @@ function sendApproveMail($bid,$toEmail){
   try{
     $mail = new PHPMailer(true);
 
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->SMTPDebug=0;//Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = false;                                   //Enable SMTP authentication
-    $mail->Username   = 'akpgamingkingdom@gmail.com';                     //SMTP username
-    $mail->Password   = '********';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Host       = 'smtp.titan.email';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'info@forgear.lk';                     //SMTP username
+    $mail->Password   = 'MtGiUdJsKg@2022';                               //SMTP password
+    // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+     $mail->SMTPSecure='ssl';
     $mail->Port       = 465; 
 
 
-    $mail->setFrom('akpgamingkingdom@gmail.com', 'Mailer');   //Add a recipient
+    $mail->setFrom('info@forgear.lk', 'Admin');   //Add a recipient
     $mail->addAddress($toEmail);               //Name is optional
-    $mail->addReplyTo('akpgamingkingdom@gmail.com', 'Information');
+    $mail->addReplyTo('info@forgear.lk', 'Information');
 
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Booking Comformation!';
-    $mail->Body    = "Your booking has been approved!<br>Conform it by provinding this number to the office <br><3>{$bid}</h3>";
+    $mail->Body    = "Your booking has been approved!<br>Conform it by provinding this number to the office <br><h3>{$bid}</h3>";
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
