@@ -185,7 +185,19 @@ if(isset($_POST['register'])){
   if($stm){
     $stm->bind_param('ii',$state,$bid);
 
-    if(sendApproveMail($bid,$email[2])){
+    if($state==1){
+      if(sendApproveMail($bid,$email[2])){
+        if($stm->execute()){
+
+          echo 1;
+
+        }else{
+          echo 0;
+        }
+      }else{
+        echo 0;
+      }
+    }else{
       if($stm->execute()){
 
         echo 1;
@@ -193,9 +205,9 @@ if(isset($_POST['register'])){
       }else{
         echo 0;
       }
-    }else{
-      echo 0;
     }
+
+    
   }else{
     echo 0;
   }
