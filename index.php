@@ -71,6 +71,16 @@ if(isset($_GET['date'])){
 
 <div class="container-fluid">
 
+<style>
+  .box form{
+    width: 100%;
+    height: 1vh;
+  }
+  .box form>input[type='submit']{
+    border-radius: 0;
+  }
+</style>
+
     <div class="row w-100 mx-auto justify-content-around" id="view">
         <?php
           $sql="SELECT * FROM bicycles WHERE isavailable=1";
@@ -78,10 +88,10 @@ if(isset($_GET['date'])){
           if($res==TRUE){
             if($res->num_rows>0){
               while($row=$res->fetch_assoc()){ ?>
-                <div class="col-10 col-md-3 my-3 ">
-                  <div class="card text-center p-0" >
-                    <div class="card-body">
-                      <h5 class="card-title text-center"><?= ucfirst($row['name'])?></h5>
+                <div class="col-10 col-md-3 my-3 box p-0 mx-2 my-3">
+                  <div class="card text-center p-0 mb-0" >
+                    <div class="card-body p-0">
+                      <h5 class="card-title text-center mt-3"><?= ucfirst($row['name'])?></h5>
                       <div class="dis w-100 my-2">
                         <p class="card-text"><?= $row['discription']==null?'New Bicycle!':ucfirst($row['discription']) ?> </p>
                       </div>
