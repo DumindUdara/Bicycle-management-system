@@ -1,5 +1,11 @@
 <?php
 
+// $username='u909663430_brs_system_use';
+// $password='b/4KM+SSnigf';
+// $dbname='u909663430_brs_system';
+// $host='localhost';
+
+
 $username='root';
 $password='';
 $dbname='brs_system';
